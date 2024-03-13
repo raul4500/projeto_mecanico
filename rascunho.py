@@ -22,7 +22,7 @@ def main():
         if sla == 1:
                 n = input("nome do cliente:")
                 c = input("cpf do cliente:")
-                e = input("endereço do cliente:") 
+                e = input("endereço do cliente:")
                 t = input("telefone do cliente:")
                 
                 m = input("marca do carro:")
