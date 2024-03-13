@@ -1,20 +1,21 @@
 import csv
 
+
 file_name = 'usuarios.dat'
 
 def verificar_login(nome, senha):
-    with open('usuarios.dat', 'r', newline='') as file:
-        reader = csv.reader(file)
-        for linha in reader:
-            if linha[0] == nome and linha[1] == senha:
-                return True
-        return False
+            with open('usuarios.dat', 'r', newline='') as file:
+                reader = csv.reader(file)
+                for linha in reader:
+                    if linha[0] == nome and linha[1] == senha:
+                        return True
+                return False
 
 def cadastrar_usuario(nome, senha):
-    with open('usuarios.dat', 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([nome, senha])
-    print("Usuário cadastrado com sucesso.")
+            with open('usuarios.dat', 'a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow([nome, senha])
+            print("Usuário cadastrado com sucesso.")
 
 def main():
     while True:
