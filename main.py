@@ -1,69 +1,46 @@
-from tkinter import *
-import tkinter as tk
-from tkinter import messagebox
-import csv
+from classes import *
 
-co0 = "#f0f3f5"  # Preta / black
-co1 = "#feffff"  # branca / white
-co2 = "#3fb5a3"  # verde / green
-co3 = "#38576b"  # valor / value
-co4 = "#403d3d"   # letra / letters
+x = 0
+while x==0 or x == 1:
+    if x == 0:
+        print("\nPrimeiramente, cadastre-se!\n")
+        n = input("Digite o nome de usuário: ")
+        s = input("Digite a senha: ")
+        funcionario = Funcionario(n, s)
+        x = 1
+    elif x == 1:
+        print("\nFaça login para acessar o programa!\n")
+        n = input("Digite o nome de usuário: ")
+        s = input("Digite a senha: ")
+        if funcionario.verificarLogin(n, s) == True:
+            print("Login realizado com sucesso.")
+            x = 2
+        else:
+            print("Nome de usuário ou senha incorretos.")
+        
 
-def novaJanela():
-    janela1 = tk.Tk()
-    janela1.geometry('500x500')
-    janela1.maxsize(width=500, height=500)
-    janela1.minsize(width=500, height=500)
-    janela1.title("Home")
 
-def verificar():
-    usuario = usuario_entry.get()
-    senha = senha_entry.get()
-    # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
-    with open('usuarios.dat', 'r', newline='') as file:
-        reader = csv.reader(file)
-        for linha in reader:
-            if linha[0] == usuario and linha[1] == senha:
-                messagebox.showinfo("Login", "login sucedido")
-                janela.destroy()  
-                novaJanela()     
-                return True
-            else:
-                messagebox.showerror("Login", "invalido")
-                return False
-                    
+print("\no que deseja fazer?\n")
+sla = int(input("1 - cadastrar pedido\n\n2 - ver pedidos\n\n3 - sair\n\nDigite o numero da açao:"))
+if sla == 1:
+    n = input("nome do cliente:")
+    c = input("cpf do cliente:")
+    e = input("endereço do cliente:")
+    t = input("telefone do cliente:")
+                
+    m = input("marca do carro:")
+    a = input("ano do carro:") 
+    p = input("placa do carro:")
+    s = int(input("tipo de serviço:\n\n1 - Reparo automotivo\n\n2 - trocar óleo\n\n3 - Alinhamento e/ou balanceamento\n\n4 - Manutenção de embreagem\n\n5 - outro\n\n6 - sair\n\nNumero da açao:"))
+                
+    cliente = Cliente(n, c, e, t)
+    pedido = Pedidos(m, a, p, s)
     
-
-# Criar uma janela principal
-janela = tk.Tk()
-janela.geometry('260x270')
-janela.maxsize(width=260, height=270)
-janela.minsize(width=260, height=270)
-janela.title("Login")
-
-frame_cima = Frame(janela, width=310, height=70, bg=co1, relief='flat')
-frame_cima.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
-frame_baixo = Frame(janela, width=310, height=230, bg=co1, relief='flat')
-frame_baixo.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
-
-# Criar os widgets
-login_label = tk.Label(frame_cima, anchor=NE, text="LOGIN", font="Ivy 25", bg=co1)
-login_label.place(x=5, y=5)
-
-linha_label = tk.Label(frame_cima, width=275, text="", font="Ivy 1", bg="green")
-linha_label.place(x=-2, y=45)
-
-usuario_label = tk.Label(frame_baixo, text="Usuário:", bg=co1)
-usuario_label.place(x=10, y=0)
-usuario_entry = tk.Entry(frame_baixo, relief="solid", width=39)
-usuario_entry.place(x=10, y=30)
-
-senha_label = tk.Label(frame_baixo, text="Senha:", bg=co1)
-senha_label.place(x=10, y=60)
-senha_entry = tk.Entry(frame_baixo, show="*", relief="solid", width=39)
-senha_entry.place(x=10, y=90)
-
-login_button = tk.Button(frame_baixo, text="Login", command=verificar, width=33, height=3, bg="green", relief="solid")
-login_button.place(x=10, y=120)
-
-janela.mainloop()
+    print(cliente.mostrarCliente())
+                
+elif sla == 2:
+    pass
+elif sla == 3:
+    pass
+else:
+    print("opçao inválida!")
