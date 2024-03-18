@@ -1,43 +1,86 @@
-from classes import *
+from tkinter import *
+import tkinter as tk
+from tkinter import messagebox
 import csv
 
-file_name = 'clientes.dat'
-file = 'pedidos.dat'
+co0 = "#f0f3f5"  # Preta / black
+co1 = "#feffff"  # branca / white
+co2 = "#3fb5a3"  # verde / green
+co3 = "#38576b"  # valor / value
+co4 = "#403d3d"   # letra / letters
 
-def cadastrar_cliente(n, c, e, t):
-    with open('clientes.dat', 'a', newline='') as file:
+file_name = 'usuarios.dat'
+
+def janela3():
+    janela = tk.Tk()
+    janela.geometry('350x350')
+    janela.title("Cadastro_cliente")
+
+    login_label = tk.Label(frame_cima, anchor=NE, text="LOGIN", font="Ivy 25", bg=co1)
+    login_label.place(x=5, y=5)
+    nome_entry = tk.Entry(frame_baixo, relief="solid", width=25, height=3)
+    nome_entry.place(x=10, y=50)
+
+def janela2():
+    janela = tk.Tk()
+    janela.geometry('350x350')
+    janela.title("Home")
+
+    ccliente_button = tk.Button( text="Criar Pedido", command=janela3, width=33, height=3, bg="orange", relief="solid")
+    ccliente_button.place(x=10, y=10)
+
+    cpedido_button = tk.Button( text="Ver Pedidos", width=33, height=3, bg="orange", relief="solid")
+    cpedido_button.place(x=10, y=100)
+
+    sair_button = tk.Button( text="Sair", width=20, height=2, bg="red", relief="solid")
+    sair_button.place(x=60, y=200)
+    janela.mainloop()
+   
+def verificar():
+    senha = senha_entry.get()
+    with open('usuarios.dat', 'a', newline = '') as file:
         writer = csv.writer(file)
-        writer.writerow([n, c, e, t])
-    print("cliente cadastrado com sucesso.")
+        writer.writerow([1234])
+    # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
+    with open('usuarios.dat', 'r', newline = '') as file:
+        reader = csv.reader(file)
+        for linha in reader:
+            if linha[0] == senha:
+                janela.destroy()  
+                janela2()     
+                return True
+            else:
+                messagebox.showerror("Login", "invalido")
+                return False
+                    
+    
 
-def cadastrar_pedido(m, a, p, s):
-    with open('pedidos.dat', 'a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([m, a, p, s])
-    print("pedido cadastrado com sucesso.")
+# Criar a primeira janela
 
-def main():
-    while True:
-        sla = int(input("1 - cadastrar pedido\n\n2 - ver pedidos\n\n3 - sair\n\nDigite o numero da açao:"))
-        if sla == 1:
-                n = input("nome do cliente:")
-                c = input("cpf do cliente:")
-                e = input("endereço do cliente:")
-                t = input("telefone do cliente:")
-                
-                m = input("marca do carro:")
-                a = input("ano do carro:")
-                p = input("placa do carro:")
-                s = input("tipo de serviço:\n\n1 - Reparo automotivo\n\n2 - trocar óleo\n\n3 - Alinhamento e/ou balanceamento\n\n4 - Manutenção de embreagem\n\n5 - outro\n\n6 - sair\n\nNumero da açao:")
-                
-                cadastrar_cliente(n, c, e, t)
-                cadastrar_pedido(m, a, p, s)
-                
-        elif sla == 2:
-                break
-        elif sla == 3:
-                break
-        else:
-                print("opçao inválida!")
-if __name__ == "__main__":
-    main()
+janela = tk.Tk()
+janela.geometry('260x270')
+janela.maxsize(width=260, height=270)
+janela.minsize(width=260, height=270)
+janela.title("Login")
+
+frame_cima = Frame(janela, width=310, height=70, bg=co1, relief='flat')
+frame_cima.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
+frame_baixo = Frame(janela, width=310, height=230, bg=co1, relief='flat')
+frame_baixo.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
+
+# Criar os widgets
+login_label = tk.Label(frame_cima, anchor=NE, text="LOGIN", font="Ivy 25", bg=co1)
+login_label.place(x=5, y=5)
+
+linha_label = tk.Label(frame_cima, width=275, text="", font="Ivy 1", bg="#660101")
+linha_label.place(x=-2, y=45)
+
+senha_label = tk.Label(frame_baixo, text="Senha:", bg=co1)
+senha_label.place(x=10, y=30)
+senha_entry = tk.Entry(frame_baixo, show="*", relief="solid", width=25)
+senha_entry.place(x=10, y=60)
+
+login_button = tk.Button(frame_baixo, text="enter", command=verificar, width=25, height=2, bg="#660101", relief="solid")
+login_button.place(x=10, y=120)
+
+janela.mainloop()
