@@ -128,5 +128,5 @@ def janela4():
     janela = tk.Tk()
     janela.geometry('350x350')
     janela.title("INFO")
-
+print("hello")
 janela3()
