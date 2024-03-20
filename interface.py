@@ -14,9 +14,6 @@ senhas = 'senhas.dat'
 def janela1():
     def verificar():
         senha = senha_entry.get()
-        with open(senhas, 'a', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow([1234])
         # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
         with open(senhas, 'r', newline = '') as file:
             reader = csv.reader(file)
