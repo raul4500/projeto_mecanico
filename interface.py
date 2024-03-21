@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
+from classes import *
 import csv
 import os
 
@@ -91,9 +92,16 @@ def janela3():
         e = endereço_entry.get()
         t = telefone_entry.get()
         
+        y = Cliente(n,c,e,t)
+        cliente = y.mostrarCliente()
+        
         with open('pedidos.dat', 'a', newline = '') as file:
             writer = csv.writer(file)
-            writer.writerow([n,c,e,t])
+            writer.writerow([cliente])
+        with open(pedidos, 'r', newline='') as file:
+            leitor = csv.reader(file)
+            for linha in leitor:
+                print(linha)
         janela.destroy()
         janela4()
         
@@ -149,10 +157,10 @@ def janela4():
         janela.destroy()
         janela2()       
         with open(pedidos, newline='') as arquivo_csv:
-                leitor_csv = csv.reader(arquivo_csv)
-                contador_linhas = 0
-                for linha in leitor_csv:
-                    contador_linhas += 1    
+            leitor_csv = csv.reader(arquivo_csv)
+            contador_linhas = 0
+            for linha in leitor_csv:
+                contador_linhas += 1    
         caminho_arquivo_temp = 'arquivo_temp.dat'
 
         linha_para_excluir = contador_linhas-1
@@ -268,4 +276,4 @@ def janela5():
 
     janela.mainloop()
     
-janela1()
+janela3()
