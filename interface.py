@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
 import csv
+import os
 
 co0 = "#D9D9D9" 
 co1 = "#feffff"  # branca / white
@@ -39,10 +40,8 @@ def janela1():
     frame_baixo.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
 
     # Criar os widgets
-    login = tk.Label(frame_cima, anchor=NE, text="LOGIN", font="Ivy 25", bg=co0)
+    login = tk.Label(frame_cima, anchor=NE, text="LOGIN", font="Arial 25", bg=co0)
     login.place(x=80, y=5)
-
-    
 
     senha = tk.Label(frame_baixo, text="senha:", bg=co0)
     senha.place(x=110, y=20)
@@ -79,13 +78,14 @@ def janela2():
     sair1.place(x=93, y=240)
     janela.mainloop()
     
+ 
 def janela3(): 
     def voltar():
         janela.destroy()
-        janela2()       
-    
+        janela2()
+           
     def verificar():
-        cont = 1
+        
         n = nome_entry.get()
         c = cpf_entry.get()
         e = endereço_entry.get()
@@ -93,8 +93,7 @@ def janela3():
         
         with open('pedidos.dat', 'a', newline = '') as file:
             writer = csv.writer(file)
-            writer.writerow([cont,n,c,e,t])
-        cont = cont+1
+            writer.writerow([n,c,e,t])
         janela.destroy()
         janela4()
         
@@ -137,7 +136,7 @@ def janela3():
     telefone_entry = tk.Entry(frame_medio, relief="flat", width=50)
     telefone_entry.place(x=20,y=170)
 
-    sair = tk.Button(frame_baixo, text="Voltar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
+    sair = tk.Button(frame_baixo, text="Cancelar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
     sair.place(x=20, y=0)
     
     proximo = tk.Button(frame_baixo, text="Próximo",fg=co1, command = verificar, width=13, height=2, bg="#951C1C", relief="flat")
@@ -148,8 +147,24 @@ def janela3():
 def janela4():
     def voltar():
         janela.destroy()
-        janela3()       
-    
+        janela2()       
+        with open(pedidos, newline='') as arquivo_csv:
+                leitor_csv = csv.reader(arquivo_csv)
+                contador_linhas = 0
+                for linha in leitor_csv:
+                    contador_linhas += 1    
+        caminho_arquivo_temp = 'arquivo_temp.dat'
+
+        linha_para_excluir = contador_linhas-1
+
+        with open(pedidos, 'r', newline='') as arquivo_leitura, open(caminho_arquivo_temp, 'w', newline='') as arquivo_escrita:
+            leitor = csv.reader(arquivo_leitura)
+            escritor = csv.writer(arquivo_escrita)  
+            for indice_linha, linha in enumerate(leitor):
+                if indice_linha != linha_para_excluir:
+                    escritor.writerow(linha)
+        os.replace(caminho_arquivo_temp, pedidos)
+           
     def verificar():
         m = marca_entry.get()
         a = ano_entry.get()
@@ -196,7 +211,7 @@ def janela4():
     descricao_entry = tk.Entry(frame_medio, relief="flat", width=25)
     descricao_entry.place(x=180, y=20)
 
-    sair = tk.Button(frame_baixo, text="Voltar", command = voltar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
+    sair = tk.Button(frame_baixo, text="Cancelar", command = voltar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
     sair.place(x=20, y=60)
     
     proximo = tk.Button(frame_baixo, text="Próximo", command = verificar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
@@ -253,4 +268,4 @@ def janela5():
 
     janela.mainloop()
     
-janela3()
+janela1()
