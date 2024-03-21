@@ -79,32 +79,20 @@ def janela2():
     sair1.place(x=93, y=240)
     janela.mainloop()
     
- 
 def janela3(): 
     def voltar():
         janela.destroy()
         janela2()
            
     def verificar():
-        
         n = nome_entry.get()
         c = cpf_entry.get()
         e = endereço_entry.get()
         t = telefone_entry.get()
-        
-        y = Cliente(n,c,e,t)
-        cliente = y.mostrarCliente()
-        
-        with open('pedidos.dat', 'a', newline = '') as file:
-            writer = csv.writer(file)
-            writer.writerow([cliente])
-        with open(pedidos, 'r', newline='') as file:
-            leitor = csv.reader(file)
-            for linha in leitor:
-                print(linha)
         janela.destroy()
         janela4()
-        
+        return [n,c,e,t]
+
     janela = tk.Tk()
     janela.geometry('350x350')
     janela.title("")
@@ -179,6 +167,9 @@ def janela4():
         p = placa_entry.get()
         d = descricao_entry.get()
         
+        y = Pedidos(m,a,p,d)
+        pedido = y.mostrarPedido()
+        
         janela.destroy()
         janela5()
     janela = tk.Tk()
@@ -237,12 +228,21 @@ def janela5():
             for linha in reader:
                 if linha[1] == s and linha[0] == u:
                     messagebox.showinfo("permissao", "Pedido cadastrado!")
+                    
+                   # with open('pedidos.dat', 'a', newline = '') as file:
+                   #     writer = csv.writer(file)
+                   #     writer.writerow(cliente)
+                    with open(pedidos, 'r', newline='') as file:
+                        leitor = csv.reader(file)
+                        for linha in leitor:
+                            print(linha)
+                    
                     janela.destroy()
                     janela2()
-                    return True
+                    
                 else:
                     messagebox.showerror("permissao", "invalido")
-                    return False
+                    
     janela = tk.Tk()
     janela.geometry('260x270')
     janela.maxsize(width=260, height=270)
@@ -276,4 +276,4 @@ def janela5():
 
     janela.mainloop()
     
-janela3()
+janela1()

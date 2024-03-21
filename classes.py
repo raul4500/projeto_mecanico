@@ -21,7 +21,7 @@ class Cliente:
         self.telefone = telefone
     
     def mostrarCliente(self):
-        return f"{self.nome},{self.cpf},{self.endereço},{self.telefone}"
+        return [self.nome,self.cpf,self.endereço,self.telefone]
         
 class Pedidos:
     def __init__(self, m, a, p, s):
@@ -31,5 +31,5 @@ class Pedidos:
         self.serviço = s
     
     def mostrarPedido(self):
-        return f"Marca:{self.marca} - Ano:{self.ano} - Placa:{self.placa} - Serviço:{self.serviço}"
+        return [self.marca,self.ano,self.placa,self.serviço]
        
