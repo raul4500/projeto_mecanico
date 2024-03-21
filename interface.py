@@ -52,13 +52,40 @@ def janela1():
     login.place(x=10, y=120)
 
     janela.mainloop()
+    
+def janela2():
+    def sair():
+        janela.destroy()
+    def criarPedido():
+        janela.destroy()
+        janela3()
+    janela = tk.Tk()
+    janela.geometry('350x350')
+    janela.title("HOME")
+    janela.winfo_rgb(co0)
 
+    ccliente = tk.Button(text="Criar Pedido", width=33,fg=co1, command=criarPedido, height=3, bg="orange", relief="flat")
+    ccliente.place(x=50, y=50)
+
+    cpedido = tk.Button(text="Ver Pedidos", width=33,fg=co1, height=3, bg="orange", relief="flat")
+    cpedido.place(x=50, y=140)
+
+    sair1 = tk.Button(text="Sair",command = sair,fg=co1, width=20, height=2, bg="red", relief="flat")
+    sair1.place(x=100, y=240)
+    janela.mainloop()
+    
 def janela3(): 
     def voltar():
         janela.destroy()
         janela2()       
     
-    def avançar():
+    def verificar():
+        n = nome_entry.get()
+        c = cpf_entry.get()
+        e = endereço_entry.get()
+        t = telefone_entry.get()
+        
+        
         janela.destroy()
         janela4()
         
@@ -79,64 +106,47 @@ def janela3():
     titulo = tk.Label(frame_cima, text="Cadastrar Cliente", font="Arial 18", bg=co0)
     titulo.place(x=70, y=10)
        
+    
     nome = tk.Label(frame_medio, text="nome:", bg=co0)
-    nome.grid(row=0, column=1, sticky=NSEW)
-    nome = tk.Entry(frame_medio, relief="flat", width=25)
-    nome.grid(row=1, column=1, sticky=NSEW)
+    nome.grid(row=0, column=2, sticky=NSEW)
+    nome_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    nome_entry.grid(row=1, column=2, sticky=NSEW)
     
     
     cpf = tk.Label(frame_medio, text="cpf:", bg=co0)
     cpf.grid(row=2, column=1, sticky=NSEW)
-    cpf = tk.Entry(frame_medio, relief="flat", width=25)
-    cpf.grid(row=3, column=1, sticky=NSEW)
+    cpf_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    cpf_entry.grid(row=3, column=1, sticky=NSEW)
     
     endereço = tk.Label(frame_medio, text="endereço:", bg=co0)
     endereço.grid(row=4, column=1, sticky=NSEW)
-    endereço = tk.Entry(frame_medio, relief="flat", width=25)
-    endereço.grid(row=5, column=1, sticky=NSEW)
+    endereço_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    endereço_entry.grid(row=5, column=1, sticky=NSEW)
     
     telefone = tk.Label(frame_medio, text="telefone:", bg=co0)
     telefone.grid(row=6, column=1, sticky=NSEW)
-    telefone = tk.Entry(frame_medio, relief="flat", width=25)
-    telefone.grid(row=7, column=1, sticky=NSEW)
+    telefone_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    telefone_entry.grid(row=7, column=1, sticky=NSEW)
 
     sair = tk.Button(frame_baixo, text="Voltar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
     sair.place(x=20, y=60)
     
-    proximo = tk.Button(frame_baixo, text="Próximo",fg=co1, command = avançar, width=13, height=2, bg="#951C1C", relief="flat")
+    proximo = tk.Button(frame_baixo, text="Próximo",fg=co1, command = verificar, width=13, height=2, bg="#951C1C", relief="flat")
     proximo.place(x=220, y=60)
     
     janela.mainloop()
-
-def janela2():
-    def sair():
-        janela.destroy()
-    def criarPedido():
-        janela.destroy()
-        janela3()
-    janela = tk.Tk()
-    janela.geometry('350x350')
-    janela.title("HOME")
-    janela.winfo_rgb(co0)
-
-    ccliente = tk.Button(text="Criar Pedido", width=33,fg=co1, command=criarPedido, height=3, bg="orange", relief="flat")
-    ccliente.place(x=50, y=50)
-
-    cpedido = tk.Button(text="Ver Pedidos", width=33,fg=co1, height=3, bg="orange", relief="flat")
-    cpedido.place(x=50, y=140)
-
-    sair = tk.Button(text="Sair",command = sair,fg=co1, width=20, height=2, bg="red", relief="flat")
-    sair.place(x=100, y=240)
 
 def janela4():
     def voltar():
         janela.destroy()
         janela3()       
     
-    def avançar():
-        janela.destroy()
-        janela5()
-        
+    def verificar():
+        m = marca_entry.get()
+        a = ano_entry.get()
+        p = placa_entry.get()
+        d = descricao_entry.get()
+         
     janela = tk.Tk()
     janela.geometry('350x350')
     janela.title("")
@@ -156,24 +166,24 @@ def janela4():
        
     marca = tk.Label(frame_medio, text="marca:", bg=co0)
     marca.grid(row=0, column=1, sticky=NSEW)
-    marca = tk.Entry(frame_medio, relief="flat", width=25)
-    marca.grid(row=1, column=1, sticky=NSEW)
+    marca_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    marca_entry.grid(row=1, column=1, sticky=NSEW)
     
     
     ano = tk.Label(frame_medio, text="ano:", bg=co0)
     ano.grid(row=2, column=1, sticky=NSEW)
-    ano = tk.Entry(frame_medio, relief="flat", width=25)
-    ano.grid(row=3, column=1, sticky=NSEW)
+    ano_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    ano_entry.grid(row=3, column=1, sticky=NSEW)
     
     placa = tk.Label(frame_medio, text="placa:", bg=co0)
     placa.grid(row=4, column=1, sticky=NSEW)
-    placa = tk.Entry(frame_medio, relief="flat", width=25)
-    placa.grid(row=5, column=1, sticky=NSEW)
+    placa_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    placa_entry.grid(row=5, column=1, sticky=NSEW)
     
     descricao = tk.Label(frame_medio, text="descrição do pedido:", bg=co0)
     descricao.place(x=180, y=0)
-    descricao = tk.Entry(frame_medio, relief="flat", width=25)
-    descricao.place(x=180, y=20)
+    descricao_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    descricao_entry.place(x=180, y=20)
 
     sair = tk.Button(frame_baixo, text="Voltar", command = voltar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
     sair.place(x=20, y=60)
@@ -198,4 +208,4 @@ def janela5():
     janela.maxsize(width=350, height=350)
     janela.minsize(width=350, height=350)
     
-janela1()
+janela3()
