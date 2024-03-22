@@ -66,13 +66,17 @@ def janela2():
     janela.maxsize(width=350, height=350)
     janela.minsize(width=350, height=350)
     
+    def verPedidos():
+        janela.destroy()
+        janela6()
+    
     frame = Frame(janela, width=350, height=350, bg=co0, relief='flat')
     frame.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
 
     ccliente = tk.Button(frame, text="Criar Pedido", width=33, fg=co1, command=criarPedido, height=3, bg="#951C1C", relief="flat")
     ccliente.place(x=50, y=50)
 
-    cpedido = tk.Button(frame, text="Ver Pedidos", width=33,fg=co1, height=3, bg="#951C1C", relief="flat")
+    cpedido = tk.Button(frame, text="Ver Pedidos", width=33,fg=co1, command=verPedidos, height=3, bg="#951C1C", relief="flat")
     cpedido.place(x=50, y=140)
 
     sair1 = tk.Button(frame, text="Sair",command = sair,fg=co1, width=20, height=2, bg="#660101", relief="flat")
@@ -275,5 +279,42 @@ def janela5():
     login.place(x=37, y=140)
 
     janela.mainloop()
+   
+def janela6(): 
+    def voltar():
+        janela.destroy()
+        janela2()
+        
+    teste = []
+    with open(pedidos, 'r', newline = '') as file:
+        reader = csv.reader(file)
+        for linha in file:
+            teste.append(linha.split())
+            
+        
+    janela = tk.Tk()
+    janela.geometry('350x350')
+    janela.title("")
+    janela.maxsize(width=350, height=350)
+    janela.minsize(width=350, height=350)
+
     
-janela1()
+    frame_cima = Frame(janela, width=350, height=60, bg=co0, relief='flat')
+    frame_cima.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
+    frame_medio = Frame(janela, width=350, height=220, bg=co0, relief='flat')
+    frame_medio.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
+    frame_baixo = Frame(janela, width=350, height=200, bg=co0, relief='flat')
+    frame_baixo.grid(row=2, column=0, padx=1, pady=0, sticky=NSEW)
+    
+    titulo = tk.Label(frame_cima, text="PEDIDOS", font="Arial 18", bg=co0)
+    titulo.place(x=100, y=10)
+       
+    nome = tk.Label(frame_medio, text=teste, bg=co0)
+    nome.place(x=20,y=0)
+      
+    sair = tk.Button(frame_baixo, text="Voltar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
+    sair.place(x=20, y=0)
+    
+    janela.mainloop()
+    
+janela6()
