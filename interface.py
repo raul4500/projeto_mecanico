@@ -15,14 +15,10 @@ senhas = 'senhas.dat'
 admin = 'admin.dat'
 pedidos = 'pedidos.dat'
 temp = 'temp.dat'
-apagador = 'apagador.dat'
 
 def janela1():
-    with open(temp, 'r', newline='')as file:
-        for i in range(0,100,1):
-            with open(temp, 'a', newline = '') as file:
-                    writer = csv.writer(file)
-                    writer.writerow('')
+    with open(temp, 'w'):
+        pass
     def verificar():
         senha = senha_entry.get()
         # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
@@ -62,6 +58,8 @@ def janela1():
     janela.mainloop()
     
 def janela2():
+    with open(temp, 'w'):
+        pass
     def sair():
         janela.destroy()
     def criarPedido():
@@ -104,11 +102,7 @@ def janela3():
         with open(temp, 'a', newline = '') as file:
             writer = csv.writer(file)
             writer.writerow([n,c,e,t])
-        with open(temp, 'r', newline = '') as file:
-            reader = csv.reader(file)
-            for linha in reader:
-                print(linha)
-        
+                
         janela.destroy()
         janela4()
         return [n,c,e,t]
@@ -170,10 +164,13 @@ def janela4():
         a = ano_entry.get()
         p = placa_entry.get()
         d = descricao_entry.get()
+        d1 = descricao1_entry.get()
+        d2 = descricao2_entry.get()
         
         with open(temp, 'a', newline = '') as file:
             writer = csv.writer(file)
-            writer.writerow([m,a,p,d])
+            writer.writerow([m,a,p,d,d1,d2])
+            writer.writerow(['----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'])
         with open(temp, 'r', newline = '') as file:
             reader = csv.reader(file)
             for linha in reader:
@@ -190,7 +187,7 @@ def janela4():
     
     frame_cima = Frame(janela, width=350, height=60, bg=co0, relief='flat')
     frame_cima.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
-    frame_medio = Frame(janela, width=350, height=250, bg=co0, relief='flat')
+    frame_medio = Frame(janela, width=350, height=220, bg=co0, relief='flat')
     frame_medio.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
     frame_baixo = Frame(janela, width=350, height=200, bg=co0, relief='flat')
     frame_baixo.grid(row=2, column=0, padx=1, pady=0, sticky=NSEW)
@@ -199,35 +196,43 @@ def janela4():
     titulo.place(x=70, y=10)
        
     marca = tk.Label(frame_medio, text="marca:", bg=co0)
-    marca.grid(row=0, column=1, sticky=NSEW)
+    marca.place(x=15,y=0)
     marca_entry = tk.Entry(frame_medio, relief="flat", width=25)
-    marca_entry.grid(row=1, column=1, sticky=NSEW)
+    marca_entry.place(x=15,y=20)
     
     
     ano = tk.Label(frame_medio, text="ano:", bg=co0)
-    ano.grid(row=2, column=1, sticky=NSEW)
+    ano.place(x=15,y=50)
     ano_entry = tk.Entry(frame_medio, relief="flat", width=25)
-    ano_entry.grid(row=3, column=1, sticky=NSEW)
+    ano_entry.place(x=15,y=70)
     
     placa = tk.Label(frame_medio, text="placa:", bg=co0)
-    placa.grid(row=4, column=1, sticky=NSEW)
+    placa.place(x=15,y=100)
     placa_entry = tk.Entry(frame_medio, relief="flat", width=25)
-    placa_entry.grid(row=5, column=1, sticky=NSEW)
+    placa_entry.place(x=15,y=120)
     
-    descricao = tk.Label(frame_medio, text="descrição do pedido:", bg=co0)
+    descricao = tk.Label(frame_medio, text="tipo(s) de serviço(s):", bg=co0)
     descricao.place(x=180, y=0)
     descricao_entry = tk.Entry(frame_medio, relief="flat", width=25)
     descricao_entry.place(x=180, y=20)
+    descricao1_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    descricao1_entry.place(x=180, y=40)
+    descricao2_entry = tk.Entry(frame_medio, relief="flat", width=25)
+    descricao2_entry.place(x=180, y=60)
 
     sair = tk.Button(frame_baixo, text="Cancelar", command = voltar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
-    sair.place(x=20, y=60)
+    sair.place(x=20, y=0)
     
     proximo = tk.Button(frame_baixo, text="Próximo", command = verificar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
-    proximo.place(x=220, y=60)
+    proximo.place(x=220, y=0)
     
     janela.mainloop()
     
 def janela5():
+    def voltar():
+        janela.destroy()
+        janela4()    
+        
     def verificar():
         s = senha_entry.get()
         u = usuario_entry.get()
@@ -279,12 +284,18 @@ def janela5():
     senha_entry = tk.Entry(frame_baixo, show="*", relief="flat", width=25)
     senha_entry.place(x=50, y=90)
 
-    login = tk.Button(frame_baixo, text="Finalizar",fg=co1, command=verificar, width=25, height=2, bg="#660101", relief="flat")
-    login.place(x=37, y=140)
+    login = tk.Button(frame_baixo, text="Finalizar",fg=co1, command=verificar, width=13, height=2, bg="#660101", relief="flat")
+    login.place(x=130, y=140)
+    
+    sair = tk.Button(frame_baixo, text="Cancelar", command = voltar, width=13, height=2, fg=co1, bg="#951C1C", relief="flat")
+    sair.place(x=20, y=140)
 
     janela.mainloop()
    
 def janela6(): 
+    def recarregar():
+        janela.destroy()
+        janela6()    
     def voltar():
         janela.destroy()
         janela2()    
@@ -302,24 +313,25 @@ def janela6():
                 text.insert("end", f"{linha_formatada}\n")
 
     janela = tk.Tk()
-    janela.geometry('350x350')
+    janela.geometry('650x350')
     janela.title("")
-    janela.maxsize(width=350, height=350)
-    janela.minsize(width=350, height=350)
+    janela.maxsize(width=650, height=350)
+    janela.minsize(width=650, height=350)
 
-    frame_cima = Frame(janela, width=350, height=270, bg=co0, relief='flat')
-    frame_cima.place(x=0,y=0)
     frame_medio = Frame(janela, width=280, height=300, bg="#660101", relief='flat')
-    frame_medio.place(x=30,y=50)
+    frame_medio.place(x=0,y=0)
     frame_medio.pack(fill='both', expand=True)
-    frame_baixo = Frame(janela, width=350, height=200, bg=co0, relief='flat')
+    frame_baixo = Frame(janela, width=650, height=200, bg=co0, relief='flat')
     frame_baixo.place(x=0,y=270)
         
     titulo = tk.Label(frame_baixo, text="PEDIDOS", font="Arial 18", bg=co0)
-    titulo.place(x=190, y=20)
+    titulo.place(x=250, y=20)
        
     sair = tk.Button(frame_baixo, text="Voltar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
     sair.place(x=30, y=15)
+    
+    recarregar = tk.Button(frame_baixo, text="Recarregar",fg=co1, command = recarregar, width=13, height=2, bg="#951C1C", relief="flat")
+    recarregar.place(x=520, y=15)
     
     imprimir_lista_em_linhas()
     
