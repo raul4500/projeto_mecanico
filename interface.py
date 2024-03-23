@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
+from tkinter import ttk
 from classes import *
 import csv
 import os
@@ -152,7 +153,7 @@ def janela4():
             leitor_csv = csv.reader(arquivo_csv)
             contador_linhas = 0
             for linha in leitor_csv:
-                contador_linhas += 1    
+                contador_linhas += 1
         caminho_arquivo_temp = 'arquivo_temp.dat'
 
         linha_para_excluir = contador_linhas-1
@@ -283,37 +284,41 @@ def janela5():
 def janela6(): 
     def voltar():
         janela.destroy()
-        janela2()
+        janela2()    
         
-    teste = []
-    with open(pedidos, 'r', newline = '') as file:
-        reader = csv.reader(file)
-        for linha in file:
-            teste.append(linha.split())
-            
-        
+    def imprimir_lista_em_linhas():
+        with open(pedidos, 'r', newline='') as file:
+            reader = csv.reader(file)
+            text = tk.Text(frame_medio, wrap="none", bg="#660101", fg=co1)
+            text.pack(fill="both", expand=True)
+            scrollbar = tk.Scrollbar(frame_medio, orient="vertical", command=text.yview)
+            scrollbar.pack(side="right", fill="y")
+            text.configure(yscrollcommand=scrollbar.set)
+            for linha in reader:
+                linha_formatada = ','.join(linha)
+                text.insert("end", f"{linha_formatada}\n")
+
     janela = tk.Tk()
     janela.geometry('350x350')
     janela.title("")
     janela.maxsize(width=350, height=350)
     janela.minsize(width=350, height=350)
 
-    
-    frame_cima = Frame(janela, width=350, height=60, bg=co0, relief='flat')
-    frame_cima.grid(row=0, column=0, padx=1, pady=0, sticky=NSEW)
-    frame_medio = Frame(janela, width=350, height=220, bg=co0, relief='flat')
-    frame_medio.grid(row=1, column=0, padx=1, pady=0, sticky=NSEW)
+    frame_cima = Frame(janela, width=350, height=270, bg=co0, relief='flat')
+    frame_cima.place(x=0,y=0)
+    frame_medio = Frame(janela, width=280, height=300, bg="#660101", relief='flat')
+    frame_medio.place(x=30,y=50)
+    frame_medio.pack(fill='both', expand=True)
     frame_baixo = Frame(janela, width=350, height=200, bg=co0, relief='flat')
-    frame_baixo.grid(row=2, column=0, padx=1, pady=0, sticky=NSEW)
-    
-    titulo = tk.Label(frame_cima, text="PEDIDOS", font="Arial 18", bg=co0)
-    titulo.place(x=100, y=10)
+    frame_baixo.place(x=0,y=270)
+        
+    titulo = tk.Label(frame_baixo, text="PEDIDOS", font="Arial 18", bg=co0)
+    titulo.place(x=190, y=20)
        
-    nome = tk.Label(frame_medio, text=teste, bg=co0)
-    nome.place(x=20,y=0)
-      
     sair = tk.Button(frame_baixo, text="Voltar",fg=co1, command = voltar, width=13, height=2, bg="#951C1C", relief="flat")
-    sair.place(x=20, y=0)
+    sair.place(x=30, y=15)
+    
+    imprimir_lista_em_linhas()
     
     janela.mainloop()
     
