@@ -2,7 +2,6 @@ from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk
-from classes import *
 import csv
 import os
 
@@ -15,8 +14,15 @@ co4 = "#403d3d"   # letra / letters
 senhas = 'senhas.dat'
 admin = 'admin.dat'
 pedidos = 'pedidos.dat'
+temp = 'temp.dat'
+apagador = 'apagador.dat'
 
 def janela1():
+    with open(temp, 'r', newline='')as file:
+        for i in range(0,100,1):
+            with open(temp, 'a', newline = '') as file:
+                    writer = csv.writer(file)
+                    writer.writerow('')
     def verificar():
         senha = senha_entry.get()
         # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
@@ -94,6 +100,15 @@ def janela3():
         c = cpf_entry.get()
         e = endereço_entry.get()
         t = telefone_entry.get()
+        
+        with open(temp, 'a', newline = '') as file:
+            writer = csv.writer(file)
+            writer.writerow([n,c,e,t])
+        with open(temp, 'r', newline = '') as file:
+            reader = csv.reader(file)
+            for linha in reader:
+                print(linha)
+        
         janela.destroy()
         janela4()
         return [n,c,e,t]
@@ -149,31 +164,20 @@ def janela4():
     def voltar():
         janela.destroy()
         janela2()       
-        with open(pedidos, newline='') as arquivo_csv:
-            leitor_csv = csv.reader(arquivo_csv)
-            contador_linhas = 0
-            for linha in leitor_csv:
-                contador_linhas += 1
-        caminho_arquivo_temp = 'arquivo_temp.dat'
-
-        linha_para_excluir = contador_linhas-1
-
-        with open(pedidos, 'r', newline='') as arquivo_leitura, open(caminho_arquivo_temp, 'w', newline='') as arquivo_escrita:
-            leitor = csv.reader(arquivo_leitura)
-            escritor = csv.writer(arquivo_escrita)  
-            for indice_linha, linha in enumerate(leitor):
-                if indice_linha != linha_para_excluir:
-                    escritor.writerow(linha)
-        os.replace(caminho_arquivo_temp, pedidos)
-           
+                   
     def verificar():
         m = marca_entry.get()
         a = ano_entry.get()
         p = placa_entry.get()
         d = descricao_entry.get()
         
-        y = Pedidos(m,a,p,d)
-        pedido = y.mostrarPedido()
+        with open(temp, 'a', newline = '') as file:
+            writer = csv.writer(file)
+            writer.writerow([m,a,p,d])
+        with open(temp, 'r', newline = '') as file:
+            reader = csv.reader(file)
+            for linha in reader:
+                print(linha)
         
         janela.destroy()
         janela5()
@@ -232,19 +236,18 @@ def janela5():
             reader = csv.reader(file)
             for linha in reader:
                 if linha[1] == s and linha[0] == u:
+                    with open(temp, 'r', newline='') as file:
+                        reader = csv.reader(file)
+                        for linha in reader:
+                            with open(pedidos, 'a', newline = '') as file:
+                                writer = csv.writer(file)
+                                writer.writerow(linha)
+                    
+                            
+                            
                     messagebox.showinfo("permissao", "Pedido cadastrado!")
-                    
-                   # with open('pedidos.dat', 'a', newline = '') as file:
-                   #     writer = csv.writer(file)
-                   #     writer.writerow(cliente)
-                    with open(pedidos, 'r', newline='') as file:
-                        leitor = csv.reader(file)
-                        for linha in leitor:
-                            print(linha)
-                    
                     janela.destroy()
                     janela2()
-                    
                 else:
                     messagebox.showerror("permissao", "invalido")
                     
@@ -322,4 +325,4 @@ def janela6():
     
     janela.mainloop()
     
-janela6()
+janela1()
