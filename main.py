@@ -1,9 +1,7 @@
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import ttk
 import csv
-import os
 
 co0 = "#D9D9D9" 
 co1 = "#feffff"  # branca / white
@@ -12,16 +10,14 @@ co3 = "#38576b"  # valor / value
 co4 = "#403d3d"   # letra / letters
 
 senhas = 'senhas.dat'
-admin = 'admin.dat'
+admin = 'senhas_admin.dat'
 pedidos = 'pedidos.dat'
 temp = 'temp.dat'
 
 def janela1():
     with open(temp, 'w'):
         pass
-    def verificar():
-        senha = senha_entry.get()
-        # Verificar se o nome de usuário e a senha correspondem aos armazenados no arquivo "users.dat"
+    def verificar1(senha):
         with open(senhas, 'r', newline = '') as file:
             reader = csv.reader(file)
             for linha in reader:
@@ -29,9 +25,11 @@ def janela1():
                     janela.destroy()  
                     janela2()     
                     return True
-                else:
-                    messagebox.showerror("Login", "invalido")
-                    return False
+            return False
+    def verificar():
+        senha = senha_entry.get()
+        if verificar1(senha) == False:
+            messagebox.showerror("permissao", "Inválido!")
     janela = tk.Tk()
     janela.geometry('260x270')
     janela.maxsize(width=260, height=270)
@@ -89,6 +87,8 @@ def janela2():
     janela.mainloop()
     
 def janela3(): 
+    with open(temp, 'w'):
+        pass
     def voltar():
         janela.destroy()
         janela2()
@@ -99,13 +99,27 @@ def janela3():
         e = endereço_entry.get()
         t = telefone_entry.get()
         
-        with open(temp, 'a', newline = '') as file:
-            writer = csv.writer(file)
-            writer.writerow([n,c,e,t])
+        def caracteres(s):
+            for char in s:
+                if not char.isalpha():
+                    return False
+                return True
+            
+        def numeros(s):
+            for char in s:
+                if not char.isdigit():
+                    return False
+            return True
+
+        if caracteres(n) == True and numeros(c) == True and len(c) == 11 and numeros(e) == False and numeros(t) == True and len(t) == 11:
+            with open(temp, 'a', newline = '') as file:
+                writer = csv.writer(file)
+                writer.writerow([n,c,e,t])
                 
-        janela.destroy()
-        janela4()
-        return [n,c,e,t]
+            janela.destroy()
+            janela4()
+        else:
+            messagebox.showerror("", "Há alguma inforção está incorreta ou faltando")
 
     janela = tk.Tk()
     janela.geometry('350x350')
@@ -131,17 +145,17 @@ def janela3():
     nome_entry.place(x=20,y=20)
     
     
-    cpf = tk.Label(frame_medio, text="cpf:", bg=co0)
+    cpf = tk.Label(frame_medio, text="cpf: (sem espaços)", bg=co0)
     cpf.place(x=20,y=50)
     cpf_entry = tk.Entry(frame_medio, relief="flat", width=50)
     cpf_entry.place(x=20,y=70)
     
-    endereço = tk.Label(frame_medio, text="endereço:", bg=co0)
+    endereço = tk.Label(frame_medio, text="endereço: (rua+número da casa)", bg=co0)
     endereço.place(x=20,y=100)
     endereço_entry = tk.Entry(frame_medio, relief="flat", width=50)
     endereço_entry.place(x=20,y=120)
     
-    telefone = tk.Label(frame_medio, text="telefone:", bg=co0)
+    telefone = tk.Label(frame_medio, text="telefone: DDD+número (sem espaços)", bg=co0)
     telefone.place(x=20,y=150)
     telefone_entry = tk.Entry(frame_medio, relief="flat", width=50)
     telefone_entry.place(x=20,y=170)
@@ -167,17 +181,27 @@ def janela4():
         d1 = descricao1_entry.get()
         d2 = descricao2_entry.get()
         
-        with open(temp, 'a', newline = '') as file:
-            writer = csv.writer(file)
-            writer.writerow([m,a,p,d,d1,d2])
-            writer.writerow(['----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'])
-        with open(temp, 'r', newline = '') as file:
-            reader = csv.reader(file)
-            for linha in reader:
-                print(linha)
-        
-        janela.destroy()
-        janela5()
+        def caracteres(s):
+            for char in s:
+                if not char.isalpha():
+                    return False
+                return True
+            
+        def numeros(s):
+            for char in s:
+                if not char.isdigit():
+                    return False
+            return True    
+    
+        if caracteres(m) == True and numeros(a) == True and len(a) == 4 and len(p) == 8 and d != ' ':
+            with open(temp, 'a', newline = '') as file:
+                writer = csv.writer(file)
+                writer.writerow([m,a,p,d,d1,d2])
+                writer.writerow(['----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'])
+            janela.destroy()
+            janela5()
+        else:
+            messagebox.showerror("", "Há alguma inforção está incorreta ou faltando")
     janela = tk.Tk()
     janela.geometry('350x350')
     janela.title("")
@@ -229,14 +253,7 @@ def janela4():
     janela.mainloop()
     
 def janela5():
-    def voltar():
-        janela.destroy()
-        janela4()    
-        
-    def verificar():
-        s = senha_entry.get()
-        u = usuario_entry.get()
-        
+    def verificar1(s,u):
         with open(admin, 'r', newline = '') as file:
             reader = csv.reader(file)
             for linha in reader:
@@ -246,15 +263,23 @@ def janela5():
                         for linha in reader:
                             with open(pedidos, 'a', newline = '') as file:
                                 writer = csv.writer(file)
-                                writer.writerow(linha)
-                    
-                            
-                            
+                                writer.writerow(linha)        
                     messagebox.showinfo("permissao", "Pedido cadastrado!")
                     janela.destroy()
                     janela2()
-                else:
-                    messagebox.showerror("permissao", "invalido")
+                    return True
+            return False
+    def voltar():
+        janela.destroy()
+        janela2()    
+        
+    def verificar():
+        s = senha_entry.get()
+        u = usuario_entry.get()
+        
+        x = verificar1(s,u)
+        if x == False:
+            messagebox.showerror("permissao", "invalido")
                     
     janela = tk.Tk()
     janela.geometry('260x270')
