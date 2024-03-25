@@ -361,7 +361,7 @@ def janela6():
     
     janela.mainloop()
     
-janela6()
+janela1()
 
 # pix Raul: 42574109813
 # pix Matheus: 42416653814
