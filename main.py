@@ -363,3 +363,7 @@ def janela6():
     janela.mainloop()
     
 janela1()
+
+# pix Raul: 42574109813
+# pix Matheus: 42416653814
+# envia a nota por aqui!!!!
